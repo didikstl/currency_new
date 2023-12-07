@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    message_list
+{% endblock title %}
+
+{% block content %}
+
+    <a href="{% url 'message-create' %}">Message</a>
+
+    <table>
+        <tr>
+
+            <td style="background-color: greenyellow"><h3>Id: {{ contactus.id }}</h3></td>
+            <td style="background-color: yellow"><h1>Email: {{ contactus.email }}</h1></td>
+            <td style="background-color: green"><h1>Subject: {{ contactus.subject }}</h1></td>
+            <td style="background-color: red"><h1>Message: {{ contactus.message }}</h1></td>
+
+
+    </table>
+
+
+
+
+{% endblock content %}
