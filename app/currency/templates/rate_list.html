@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    rate_list
+{% endblock title %}
+
+{% block content %}
+
+    <a href="{% url 'rate-create' %}">Create</a><br>
+
+    {% for rate in object_list %}
+
+        <table>
+            <tr>
+                <td><a href="{% url 'rate-details' rate.id %}"><h3>Details</h3></a></td>
+                <td style="background-color: greenyellow"><h3>Id: {{ rate.id }}</h3></td>
+                <td style="background-color: green"><h3>Buy: {{ rate.buy }}</h3></td>
+                <td style="background-color: red"><h3>Sell: {{ rate.sell }}</h3></td>
+                <td style="background-color: blue"><h3>Created: {{ rate.created }}</h3></td>
+                <td style="background-color: white"><h3>Type: {{ rate.get_type_display }}</h3></td>
+                <td style="background-color: orange"><h3>Source: {{ rate.source }}</h3></td>
+                <td><a href="{% url 'rate-update' rate.id %}"><h3>Edit</h3></a></td>
+                <td><a href="{% url 'rate-delete' rate.id %}"><h3>Delete</h3></a></td>
+
+
+        </table>
+
+
+    {% endfor %}
+
+{% endblock content %}
