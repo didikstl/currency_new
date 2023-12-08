@@ -13,6 +13,7 @@ class RateForm(forms.ModelForm):
             'source',
         )
 
+
 class MessageForm(forms.ModelForm):
     class Meta:
         model = ContactUs
@@ -21,6 +22,7 @@ class MessageForm(forms.ModelForm):
             'subject',
             'message',
         )
+
 
 class SourceForm(forms.ModelForm):
     class Meta:

@@ -21,6 +21,9 @@ class Rate(models.Model):
         default=CURRENCY_PRIVAT
     )
 
+    def __str__(self):
+        return f'{self.buy} - {self.sell} - {self.source}'
+
 
 class ContactUs(models.Model):
     email = models.EmailField(max_length=254)

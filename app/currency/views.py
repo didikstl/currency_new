@@ -67,7 +67,6 @@ class MessageDetailView(DetailView):
     template_name = 'message_details.html'
 
 
-
 # SOURCE___________________________________________________________________________________________
 
 class SourceListView(ListView):
