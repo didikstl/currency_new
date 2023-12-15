@@ -43,25 +43,29 @@ class RateAdmin(admin.ModelAdmin):
 class ContactUsAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'name',
         'email',
         'subject',
         'message',
+        # 'created',
+
     )
     list_filter = ('email',)
     search_fields = (
+        'name',
         'email',
         'subject',
         'message',
     )
 
     def has_delete_permission(self, request, obj=None):  # Ограничения по удалению
-        return False
+        return True
 
     def has_add_permission(self, request):  # Ограничения по добавлению рейтов
-        return False
+        return True
 
     def has_change_permission(self, request, obj=None):  # Ограничения по изменению рейтов если добавить FALSE
-        return False
+        return True
 
 
 @admin.register(Source)

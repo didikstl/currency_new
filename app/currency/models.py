@@ -8,6 +8,7 @@ from app.currency.choices import (
 )
 
 
+# RATE _________________________________________________________________________
 class Rate(models.Model):
     buy = models.DecimalField(_('Buy'), max_digits=6, decimal_places=2)
     sell = models.DecimalField(_('Sell'), max_digits=6, decimal_places=2)
@@ -32,16 +33,35 @@ class Rate(models.Model):
         return f'{self.buy} - {self.sell} - {self.source}'
 
 
+# ContactUs_______________________________________________
 class ContactUs(models.Model):
-    email = models.EmailField(_('Email'), max_length=254)
-    subject = models.TextField(verbose_name="subject")
-    message = models.TextField(verbose_name="message")
+    name = models.CharField(
+        _('Name'),
+        max_length=64,
+        default='admin'
+    )
+    email = models.EmailField(
+        _('Email'),
+        max_length=254,
+        default='bond007@gmail.com'
+    )
+    subject = models.CharField(
+        _('Subject'),
+        max_length=254,
+    )
+    message = models.CharField(
+        _('Message'),
+        max_length=254
+    )
+
+
 
     class Meta:
         verbose_name = _('Message')
         verbose_name_plural = _('Messages')
 
 
+# Source______________________________________________________
 class Source(models.Model):
     source_url = models.URLField(
 
@@ -60,3 +80,20 @@ class Source(models.Model):
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
+
+# RequestResponseLog______________________________________________
+
+class RequestResponseLog(models.Model):
+    path = models.CharField(
+        _('Path'),
+        max_length=256,
+    )
+    request_method = models.CharField(
+        _('Request method'),
+        max_length=256,
+    )
+
+    time = models.FloatField(
+        _('Time'),
+    )
+
