@@ -5,20 +5,31 @@
 {% endblock title %}
 
 {% block content %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'message-create' %}">Message</a>
+    {% endif %}
 
-    <a href="{% url 'message-create' %}">Message</a>
 
     {% for contactus in object_list %}
 
         <table>
             <tr>
-                <td><a href="{% url 'message-details' contactus.id %}"><h3>Details_info</h3></a></td>
-                <td style="background-color: greenyellow"><h3>Id: {{ contactus.id }}</h3></td>
-                <td style="background-color: yellow"><h1>Email: {{ contactus.email }}</h1></td>
-                <td style="background-color: green"><h1>Subject: {{ contactus.subject }}</h1></td>
-                <td style="background-color: red"><h1>Message: {{ contactus.message }}</h1></td>
-                <td><a href="{% url 'message-update' contactus.id %}"><h3>Edit</h3></a></td>
-                <td><a href="{% url 'message-delete' contactus.id %}"><h3>Delete</h3></a></td>
+
+
+                <td style="background-color: gold"><h2>Id: {{ contactus.id }}</h2></td>
+                <td style="background-color: greenyellow"><h2>Name: {{ contactus.name }}</h2></td>
+                <td style="background-color: yellow"><h2>Email: {{ contactus.email }}</h2></td>
+                <td style="background-color: green"><h2>Subject: {{ contactus.subject }}</h2></td>
+                <td style="background-color: orange"><h2>Message: {{ contactus.message }}</h2></td>
+                {% if request.user.is_superuser %}
+                    <td><a href="{% url 'message-update' contactus.id %}"><h2>Edit</h2></a></td>
+                    <td><a href="{% url 'message-delete' contactus.id %}"><h2>Delete</h2></a></td>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <td><a href="{% url 'message-details' contactus.id %}"><h2>Details</h2></a></td>
+                {% endif %}
+
+            </tr>
 
         </table>
 
