@@ -6,7 +6,7 @@ from app.currency.choices import (
     SOURCE_URL_TYPE,
     CURRENCY_PRIVAT,
 )
-
+from django.contrib.auth.models import AbstractUser
 
 # RATE _________________________________________________________________________
 class Rate(models.Model):
@@ -54,8 +54,6 @@ class ContactUs(models.Model):
         max_length=254
     )
 
-
-
     class Meta:
         verbose_name = _('Message')
         verbose_name_plural = _('Messages')
@@ -81,6 +79,7 @@ class Source(models.Model):
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
 
+
 # RequestResponseLog______________________________________________
 
 class RequestResponseLog(models.Model):
@@ -96,4 +95,8 @@ class RequestResponseLog(models.Model):
     time = models.FloatField(
         _('Time'),
     )
+
+# USER_________________________________________________________________________________
+
+
 

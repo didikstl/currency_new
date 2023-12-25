@@ -168,6 +168,9 @@ class IndexView(TemplateView):
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
+    """
+        Для регистрации пользователя, запроса логина и пароля
+    """
     model = get_user_model()
     template_name = 'registration/profile.html'
     success_url = reverse_lazy('Index')
@@ -175,12 +178,11 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         'first_name',
         'last_name',
     )
-
-    # def get_queryset(self):
-    #     qs = super().get_queryset().filter(id=self.request.user.id)
-    #     return qs
-
-
     def get_object(self, queryset=None):
+        """
+        Возврат данных пользователя по ИД.
+        :param queryset:
+        :return:
+        """
         qs = self.get_queryset()
         return qs.get(id=self.request.user.id)
