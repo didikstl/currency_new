@@ -39,5 +39,11 @@ SOURCE_URL_TYPE = (
     ('https://creditdnepr.com.ua/en', 'Bank Credit Dnipro'),
 
 )
+
+SOURCE_IMAGES = (
+    (CURRENCY_PIVDENNY, 'media/logo/Pi'),
+    (CURRENCY_PRIVAT, 'Bank PRIVAT'),
+    (CURRENCY_CREDITDNEPR, 'Bank Credit Dnipro'),
+)
 # ________________________________________________________________________________________
 
