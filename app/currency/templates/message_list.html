@@ -16,11 +16,11 @@
             <tr>
 
 
-                <td style="background-color: gold"><h2>Id: {{ contactus.id }}</h2></td>
-                <td style="background-color: greenyellow"><h2>Name: {{ contactus.name }}</h2></td>
-                <td style="background-color: yellow"><h2>Email: {{ contactus.email }}</h2></td>
-                <td style="background-color: green"><h2>Subject: {{ contactus.subject }}</h2></td>
-                <td style="background-color: orange"><h2>Message: {{ contactus.message }}</h2></td>
+                <td style="background-color: grey"><h2>Id: {{ contactus.id }}</h2></td>
+                <td style="background-color: darkslategrey"><h2>Name: {{ contactus.name }}</h2></td>
+                <td style="background-color: lightsteelblue"><h2>Email: {{ contactus.email }}</h2></td>
+                <td style="background-color: grey"><h2>Subject: {{ contactus.subject }}</h2></td>
+                <td style="background-color: grey"><h2>Message: {{ contactus.message }}</h2></td>
                 {% if request.user.is_superuser %}
                     <td><a href="{% url 'message-update' contactus.id %}"><h2>Edit</h2></a></td>
                     <td><a href="{% url 'message-delete' contactus.id %}"><h2>Delete</h2></a></td>
