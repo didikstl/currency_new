@@ -1,0 +1,5 @@
+body {
+    background-image: url('/static/hogwarts.jpg');
+    background-size: cover; /* для корректного масштабирования изображения */
+    /* Дополнительные стили, если необходимо */
+}

@@ -8,6 +8,7 @@ from app.currency.choices import (
 )
 from django.contrib.auth.models import AbstractUser
 
+
 # RATE _________________________________________________________________________
 class Rate(models.Model):
     buy = models.DecimalField(_('Buy'), max_digits=6, decimal_places=2)
@@ -74,6 +75,13 @@ class Source(models.Model):
         default=CURRENCY_PRIVAT
     )
     created = models.DateTimeField(_('Created'), auto_now_add=True)
+    logo = models.FileField(
+        _('Logo'),
+        default=None,
+        null=True,
+        blank=True,
+        upload_to='static/'
+    )
 
     class Meta:
         verbose_name = _('Source')
@@ -97,6 +105,3 @@ class RequestResponseLog(models.Model):
     )
 
 # USER_________________________________________________________________________________
-
-
-

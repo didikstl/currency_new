@@ -3,8 +3,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.urls import reverse_lazy
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+# import os
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -29,9 +36,13 @@ INSTALLED_APPS = [
     'app.currency',
     'django_extensions',
     'account',
+    'bootstrap4',
+    'crispy_forms',
+    "crispy_bootstrap4",
 ]
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,7 +98,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -108,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -124,6 +133,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static/',
+    # os.path.join(BASE_DIR, "static/"),
+]
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "storages.backends.s3.S3Storage",
+#         "OPTIONS": {
+#           'access_key': '',
+#           'secret_key': '',
+#           'bucket_name': 'media',
+#           'querystring_auth': False,
+#           'region_name': 'fra1',
+#         },
+#     },
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -145,11 +177,6 @@ LOGOUT_REDIRECT_URL = reverse_lazy('Index')
 
 HTTP_METHOD = 'http'
 DOMAIN = '0.0.0.0:8000'
-
-
-
-
-
 
 # from pathlib import Path
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns

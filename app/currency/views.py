@@ -132,7 +132,7 @@ class MessageDetailView(DetailView):
 class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
-
+    # fields = ('Logo')
 
 class SourceCreateView(CreateView):
     form_class = SourceForm
@@ -186,3 +186,10 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         """
         qs = self.get_queryset()
         return qs.get(id=self.request.user.id)
+
+
+#_____________________________________________
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
+#
