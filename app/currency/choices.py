@@ -40,10 +40,10 @@ SOURCE_URL_TYPE = (
 
 )
 
-SOURCE_IMAGES = (
-    (CURRENCY_PIVDENNY, 'media/logo/Pi'),
-    (CURRENCY_PRIVAT, 'Bank PRIVAT'),
-    (CURRENCY_CREDITDNEPR, 'Bank Credit Dnipro'),
-)
-# ________________________________________________________________________________________
+# SOURCE_IMAGES = (
+#     (CURRENCY_PIVDENNY, 'media/logo/Pi'),
+#     (CURRENCY_PRIVAT, 'Bank PRIVAT'),
+#     (CURRENCY_CREDITDNEPR, 'Bank Credit Dnipro'),
+# )
+# # ________________________________________________________________________________________
 
