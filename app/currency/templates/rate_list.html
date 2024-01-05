@@ -5,7 +5,6 @@
 {% endblock title %}
 
 {% block content %}
-
     {% if request.user.is_authenticated %}
         <a href="{% url 'rate-create' %}">Create</a><br>
     {% endif %}
@@ -20,7 +19,6 @@
                 <th scope="col">Type</th>
                 <th scope="col">Source</th>
                 <th scope="col">Actions</th>
-
             </tr>
             </thead>
             <tbody>
@@ -32,23 +30,23 @@
                     <th style="background-color: skyblue"><h3>Type: {{ rate.get_type_display }}</h3></th>
                     <th style="background-color: skyblue"><h3>Source: {{ rate.source }}</h3></th>
                     {% if request.user.is_superuser %}
-                        <td>
+                        <th>
                             <form action="{% url 'rate-update' rate.id %}" method="get">
                                 <button type="submit">Edit</button>
                             </form>
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             <form action="{% url 'rate-delete' rate.id %}" method="get">
                                 <button type="submit">Delete</button>
                             </form>
-                        </td>
+                        </th>
                     {% endif %}
                     {% if request.user.is_authenticated %}
-                        <td>
+                        <th>
                             <form action="{% url 'rate-details' rate.id %}" method="get">
                                 <button type="submit">Details</button>
                             </form>
-                        </td>
+                        </th>
                     {% endif %}
                 </tr>
             {% endfor %}
