@@ -11,27 +11,35 @@
     {% endif %}
 
 
-    {% for source in object_list %}
-
-        <table>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
             <tr>
-
-                <td style="background-color: grey"><h3>Id: {{ source.id }}</h3></td>
-                <td style="background-color: darkgray"><h3>Source_url: {{ source.source_url }}</h3></td>
-                <td style="background-color: dimgrey"><h3>Bank name: {{ source.source_name }}</h3></td>
-                <td><img style="height: 50px; width: 50px" src="{% static 'Privat.png' %}" alt="logo"></td>
-
-
-                {% if request.user.is_superuser %}
-                    <td><a href="{% url 'source-update' source.id %}"><h3>Edit</h3></a></td>
-                    <td><a href="{% url 'source-delete' source.id %}"><h3>Delete</h3></a></td>
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                    <td><a href="{% url 'source-details' source.id %}"><h3>Details</h3></a></td>
-                {% endif %}
-
+                <th scope="col">Id</th>
+                <th scope="col">source_url</th>
+                <th scope="col">source_name</th>
+                <th scope="col">logo</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for source in object_list %}
+                <tr>
+                    <th style="background-color: grey"><h3>Id: {{ source.id }}</h3></th>
+                    <th style="background-color: darkgray"><h3>Source_url: {{ source.source_url }}</h3></th>
+                    <th style="background-color: dimgrey"><h3>Bank name: {{ source.source_name }}</h3></th>
+                    <th><img style="height: 50px; width: 50px" src="{{ source.logo_url }}" alt="logo"></th>
+                    {% if request.user.is_superuser %}
+                        <th><a href="{% url 'source-update' source.id %}"><h3>Edit</h3></a></th>
+                        <th><a href="{% url 'source-delete' source.id %}"><h3>Delete</h3></a></th>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <th><a href="{% url 'source-details' source.id %}"><h3>Details</h3></a></th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
-
-    {% endfor %}
+    </div>
 
 {% endblock content %}

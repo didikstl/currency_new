@@ -178,6 +178,10 @@ LOGOUT_REDIRECT_URL = reverse_lazy('Index')
 HTTP_METHOD = 'http'
 DOMAIN = '0.0.0.0:8000'
 
+CELERY_BROKER_URL = 'amqp://localhost'
+
+
+#____________________________________________________________________________________
 # from pathlib import Path
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # from django.urls import reverse_lazy

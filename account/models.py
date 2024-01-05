@@ -22,8 +22,6 @@ class User(AbstractUser):
         verbose_name = _('User')
         verbose_name_plural = _('Users')
 
-
-
     @property
     def avatar_url(self) -> str:
         if self.avatar:

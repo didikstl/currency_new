@@ -9,31 +9,37 @@
         <a href="{% url 'message-create' %}">Message</a>
     {% endif %}
 
-
-    {% for contactus in object_list %}
-
-        <table>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
             <tr>
-
-
-                <td style="background-color: grey"><h2>Id: {{ contactus.id }}</h2></td>
-                <td style="background-color: darkslategrey"><h2>Name: {{ contactus.name }}</h2></td>
-                <td style="background-color: lightsteelblue"><h2>Email: {{ contactus.email }}</h2></td>
-                <td style="background-color: grey"><h2>Subject: {{ contactus.subject }}</h2></td>
-                <td style="background-color: grey"><h2>Message: {{ contactus.message }}</h2></td>
-                {% if request.user.is_superuser %}
-                    <td><a href="{% url 'message-update' contactus.id %}"><h2>Edit</h2></a></td>
-                    <td><a href="{% url 'message-delete' contactus.id %}"><h2>Delete</h2></a></td>
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                    <td><a href="{% url 'message-details' contactus.id %}"><h2>Details</h2></a></td>
-                {% endif %}
-
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">subject</th>
+                <th scope="col">message</th>
+                <th scope="col">Actions</th>
             </tr>
-
+            </thead>
+            <tbody>
+            {% for contactus in object_list %}
+                <tr>
+                    <td style="background-color: grey"><h2>Id: {{ contactus.id }}</h2></td>
+                    <td style="background-color: darkslategrey"><h2>Name: {{ contactus.name }}</h2></td>
+                    <td style="background-color: lightsteelblue"><h2>Email: {{ contactus.email }}</h2></td>
+                    <td style="background-color: grey"><h2>Subject: {{ contactus.subject }}</h2></td>
+                    <td style="background-color: grey"><h2>Message: {{ contactus.message }}</h2></td>
+                    {% if request.user.is_superuser %}
+                        <td><a href="{% url 'message-update' contactus.id %}"><h2>Edit</h2></a></td>
+                        <td><a href="{% url 'message-delete' contactus.id %}"><h2>Delete</h2></a></td>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <td><a href="{% url 'message-details' contactus.id %}"><h2>Details</h2></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
-
-
-    {% endfor %}
+    </div>
 
 {% endblock content %}

@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from app.currency.choices import (
@@ -7,6 +9,8 @@ from app.currency.choices import (
     CURRENCY_PRIVAT,
 )
 from django.contrib.auth.models import AbstractUser
+
+from django.templatetags.static import static
 
 
 # RATE _________________________________________________________________________
@@ -80,12 +84,25 @@ class Source(models.Model):
         default=None,
         null=True,
         blank=True,
-        upload_to='static/'
+        upload_to='logo/'
     )
 
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
+
+    @property
+    def logo_url(self) -> str:
+        if self.logo:
+            return self.logo.url
+
+        return static('Privat.png')
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.username = uuid.uuid4()
+
+        return super().save(*args, **kwargs)
 
 
 # RequestResponseLog______________________________________________

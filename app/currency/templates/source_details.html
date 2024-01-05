@@ -10,11 +10,10 @@
 
     <table>
         <tr>
-            <td style="background-color: greenyellow"><h3>Id: {{ source.id }}</h3></td>
-            <td style="background-color: green"><h3>Source_url: {{ source.source_url }}</h3></td>
-            <td style="background-color: red"><h3>Bank name: {{ source.source_name }}</h3></td>
-
-            <td><img style="height: 50px; width: 50px" src="{% static 'Privat.png' %}" alt="logo"></td>
+            <td style="background-color: grey"><h3>Id: {{ source.id }}</h3></td>
+            <td style="background-color: darkgray"><h3>Source_url: {{ source.source_url }}</h3></td>
+            <td style="background-color: dimgrey"><h3>Bank name: {{ source.source_name }}</h3></td>
+            <td><img style="height: 50px; width: 50px" src="{{ source.logo_url }}" alt="logo"></td>
 
     </table>
 
