@@ -21,24 +21,46 @@ class CurrencyTypeChoices(models.IntegerChoices):
     PLN = 4, 'Polish_zloty'
 
 
-# ____________________________________________________________________________________________
+# class CurrencyTypeChoices(models.CharField):
+#     USD = 'USD', 'Dollar_USA'
+#     EUR = 'EUR', 'EVRO_Europe'
+#     UAH = 'UAH', 'Ukrainian_hryvnia'
+#     PLN = 'PLN', 'Polish_zloty'
+# ____________'________________________________________________________________________________
 
 CURRENCY_PIVDENNY = 'PIVDENNY'
 CURRENCY_PRIVAT = 'PRIVAT'
 CURRENCY_CREDITDNEPR = 'CREDITDNEPR'
+CURRENCY_MONOBANK = 'MONOBANK'
+
 SOURCE_TYPE = (
     (CURRENCY_PIVDENNY, 'Bank Pivdenny'),  # первое значение идет в базу, второй для пользователя
     (CURRENCY_PRIVAT, 'Bank PRIVAT'),
     (CURRENCY_CREDITDNEPR, 'Bank Credit Dnipro'),
+    (CURRENCY_MONOBANK, 'Bank MONO'),
 )
 # ___________________________________________________________________________________________
 
+# SOURCE_URL_TYPE = (
+#     ('https://bank.com.ua/en', 'Bank Pivdenny'),  # первое значение идет в базу, второй для пользователя
+#     ('https://en.privatbank.ua/', 'Bank PRIVAT'),
+#     # ('https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5', 'Bank PRIVAT'),
+#     ('https://creditdnepr.com.ua/en', 'Bank Credit Dnipro'),
+#     ('https://www.monobank.ua/', 'Bank MONO'),
+#
+# )
+
 SOURCE_URL_TYPE = (
     ('https://bank.com.ua/en', 'Bank Pivdenny'),  # первое значение идет в базу, второй для пользователя
-    ('https://en.privatbank.ua/', 'Bank PRIVAT'),
+    ('https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5', 'Bank PRIVAT'),
+    # ('https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5', 'Bank PRIVAT'),
     ('https://creditdnepr.com.ua/en', 'Bank Credit Dnipro'),
+    ('https://api.monobank.ua/bank/currency', 'Bank MONO'),
 
 )
+
+
+
 
 # SOURCE_IMAGES = (
 #     (CURRENCY_PIVDENNY, 'media/logo/Pi'),
@@ -46,4 +68,3 @@ SOURCE_URL_TYPE = (
 #     (CURRENCY_CREDITDNEPR, 'Bank Credit Dnipro'),
 # )
 # # ________________________________________________________________________________________
-

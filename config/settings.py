@@ -2,7 +2,7 @@ from pathlib import Path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.urls import reverse_lazy
-
+from celery.schedules import crontab
 
 # import os
 
@@ -176,10 +176,24 @@ LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('Index')
 
 HTTP_METHOD = 'http'
-DOMAIN = '0.0.0.0:8000'
+DOMAIN = '0.0.0.0:8001'
 
-CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = 'amqp://localhost'
 
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+CELERY_RESULT_BACKEND = 'rpc://'
+
+
+CELERY_BEAT_SCHEDULE = {
+    'parse_privatbank': {
+        'task': 'app.currency.tasks.parse_privatbank',
+        'schedule': crontab(minute='*/5')
+    },
+    'parse_monobank': {
+        'task': 'app.currency.tasks.parse_monobank',
+        'schedule': crontab(minute='*/5')
+    }
+}
 
 #____________________________________________________________________________________
 # from pathlib import Path

@@ -18,11 +18,20 @@ class Rate(models.Model):
     buy = models.DecimalField(_('Buy'), max_digits=6, decimal_places=2)
     sell = models.DecimalField(_('Sell'), max_digits=6, decimal_places=2)
     created = models.DateTimeField(_('Created'), auto_now_add=True)
+    # type = models.CharField(_('Type'),
+    #                         max_length=50,
+    #                         choices=CurrencyTypeChoices.choices,
+    #                         default=CurrencyTypeChoices.USD,)
     type = models.SmallIntegerField(
         _('Type'),
         choices=CurrencyTypeChoices.choices,
         default=CurrencyTypeChoices.USD,
     )
+    # type = models.CharField(
+    #     _('Type'),
+    #     choices=CurrencyTypeChoices,
+    #     default=CurrencyTypeChoices.USD,
+    # )
     source = models.CharField(
         _('Source'),
         max_length=255,
@@ -78,6 +87,14 @@ class Source(models.Model):
         choices=SOURCE_TYPE,
         default=CURRENCY_PRIVAT
     )
+
+    code_name = models.CharField(
+        _('Code name'),
+        max_length=64,
+        unique=True
+    )
+
+
     created = models.DateTimeField(_('Created'), auto_now_add=True)
     logo = models.FileField(
         _('Logo'),
