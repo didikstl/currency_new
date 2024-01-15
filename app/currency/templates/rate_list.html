@@ -5,9 +5,21 @@
 {% endblock title %}
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <form method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" />
+            </form>
+        </div>
+    </div>
+
     {% if request.user.is_authenticated %}
         <a href="{% url 'rate-create' %}">Create</a><br>
     {% endif %}
+
+
 
     <div class="row">
         <table class="table table-striped">
@@ -22,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for rate in object_list %}
+            {% for rate in page_obj %}
                 <tr>
                     <th style="background-color: slategray"><h3>Id: {{ rate.id }}</h3></th>
                     <th style="background-color: dimgrey"><h3>Buy: {{ rate.buy }}</h3></th>
@@ -52,6 +64,12 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/pagination.html' %}
+        </div>
     </div>
 
 {% endblock content %}

@@ -12,6 +12,9 @@ from django.templatetags.static import static
 class User(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
     avatar = models.FileField(_('Avatar'), default=None, null=True, blank=True, upload_to='avatars/')
+    phone = models.CharField(_('Phone'), max_length=15, blank=True, null=True)
+
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -33,4 +36,7 @@ class User(AbstractUser):
         if not self.pk:
             self.username = uuid.uuid4()
 
-        return super().save(*args, **kwargs)
+        self.email = self.email.lower()
+        instance = super().save(*args, **kwargs)
+
+        return instance
