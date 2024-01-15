@@ -5,6 +5,16 @@
 {% endblock title %}
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <form method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" />
+            </form>
+        </div>
+    </div>
+
     {% if request.user.is_authenticated %}
         <a href="{% url 'message-create' %}">Message</a>
     {% endif %}
@@ -40,6 +50,12 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/pagination.html' %}
+        </div>
     </div>
 
 {% endblock content %}

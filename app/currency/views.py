@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
@@ -6,26 +8,57 @@ from django.views.generic import (
     ListView, CreateView, UpdateView,
     DeleteView, DetailView, TemplateView)
 
+from django_filters.views import FilterView
 from django.urls import reverse, reverse_lazy
 
+from app.currency.filters import RateFilter, ContactUsFilter, SourceFilter
 from app.currency.forms import RateForm, MessageForm, SourceForm
 from app.currency.models import Rate, ContactUs, Source
 
 from django.conf import settings
 
-
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseForbidden
 from django.views import View
+
 
 #
 
 
 # RATE _______________________________________________________________________________________
 
-class RateListView(LoginRequiredMixin, ListView):
+class RateListView(LoginRequiredMixin, FilterView):
     queryset = Rate.objects.all()
     template_name = 'rate_list.html'
+    paginate_by = 30
+    filterset_class = RateFilter
+
+    # filterset_fields = (
+    #     'buy',
+    #     'sell',
+    #     'type',
+    # )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Разрешение конфликта между пагинацией и фильтрацией
+        :param object_list:
+        :param kwargs:
+        :return:
+        """
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        query_parameters = self.request.GET.urlencode()
+
+        # первый вариант
+        # context['filter_params'] = '&'.join(
+        #     f'{key}={value}' for key, value in self.request.GET.items()
+        #     if key != 'page'
+        # )
+
+        # второй вариант
+        context['filter_params'] = re.sub(r'page=\d+', '', query_parameters).lstrip('&')
+
+        return context
 
     def get_object(self, queryset=None):
         qs = self.get_queryset()
@@ -45,12 +78,11 @@ class RateUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'rate_update.html'
 
     def test_func(self):
-    # Проверка, является ли текущий пользователь суперпользователем
+        # Проверка, является ли текущий пользователь суперпользователем
         return self.request.user.is_superuser
 
-
     def handle_no_permission(self):
-    # Обработка случая, когда доступ запрещен
+        # Обработка случая, когда доступ запрещен
         return HttpResponseForbidden("Доступ изменения данных для данного пользователя запрещен.")
 
 
@@ -60,12 +92,11 @@ class RateDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'rate_delete.html'
 
     def test_func(self):
-    # Проверка, является ли текущий пользователь суперпользователем
+        # Проверка, является ли текущий пользователь суперпользователем
         return self.request.user.is_superuser
 
-
     def handle_no_permission(self):
-    # Обработка случая, когда доступ запрещен
+        # Обработка случая, когда доступ запрещен
         return HttpResponseForbidden("Доступ удаления данных  для данного пользователя запрещен.")
 
 
@@ -76,9 +107,27 @@ class RateDetailView(DetailView):
 
 # MESSAGE_________________________________________________________________________________________
 
-class MessageListView(ListView):
+class MessageListView(FilterView):
     queryset = ContactUs.objects.all()
     template_name = 'message_list.html'
+    paginate_by = 5
+    filterset_class = ContactUsFilter
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Разрешение конфликта между пагинацией и фильтрацией
+        :param object_list:
+        :param kwargs:
+        :return:
+        """
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        query_parameters = self.request.GET.urlencode()
+        context['filter_params'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items()
+            if key != 'page'
+        )
+
+        return context
 
 
 class MessageCreateView(CreateView):
@@ -129,10 +178,29 @@ class MessageDetailView(DetailView):
 
 # SOURCE___________________________________________________________________________________________
 
-class SourceListView(ListView):
+class SourceListView(FilterView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
+    paginate_by = 5
+    filterset_class = SourceFilter
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Разрешение конфликта между пагинацией и фильтрацией
+        :param object_list:
+        :param kwargs:
+        :return:
+        """
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        query_parameters = self.request.GET.urlencode()
+        context['filter_params'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items()
+            if key != 'page'
+        )
+
+        return context
     # fields = ('Logo')
+
 
 class SourceCreateView(CreateView):
     form_class = SourceForm
@@ -178,6 +246,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         'first_name',
         'last_name',
     )
+
     def get_object(self, queryset=None):
         """
         Возврат данных пользователя по ИД.
@@ -188,7 +257,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return qs.get(id=self.request.user.id)
 
 
-#_____________________________________________
+# _____________________________________________
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
