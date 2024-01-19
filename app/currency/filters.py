@@ -6,6 +6,11 @@ from app.currency.models import Rate, Source, ContactUs
 class RateFilter(django_filters.FilterSet):
     class Meta:
         model = Rate
+        # fields = {
+        #     'buy': ['exact', 'gt', 'gte', 'lt', 'lte'],
+        #     'sell': ['exact', 'gt', 'gte', 'lt', 'lte'],
+        #     'type': ['exact'],
+        # }
         fields = (
             'buy',
             'sell',
@@ -20,6 +25,8 @@ class ContactUsFilter(django_filters.FilterSet):
             'name',
             'email',
             'subject',
+            'message',
+
         )
 
 

@@ -37,6 +37,10 @@ class User(AbstractUser):
             self.username = uuid.uuid4()
 
         self.email = self.email.lower()
+
+        # if self.phone:
+        #     self.phone = ''.join(char for char in self.phone if char.isdigit())
+
         instance = super().save(*args, **kwargs)
 
         return instance

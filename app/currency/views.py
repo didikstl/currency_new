@@ -1,5 +1,6 @@
 import re
-
+import requests
+import json
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
@@ -19,6 +20,10 @@ from django.conf import settings
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseForbidden
+from django.http import HttpResponse
+# для работы с rest_framework
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from django.views import View
 
 
@@ -261,4 +266,25 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
+
+# _________Тестовая____________________________________
+# @api_view(['GET'])
+# def test_view(request):
+#     object_list = Rate.objects.all()
+#     context = []
 #
+#     for obj in object_list:
+#         context.append({
+#             'id': obj.id,
+#             'buy': float(obj.buy),
+#             'sell': float(obj.sell),
+#         })
+#
+#     # headers = {
+#     #     'Content-Type': 'application/json'
+#     # }
+#
+#     # return HttpResponse(json.dumps(context), headers=headers)
+#     return Response(context)
+#________Django_REST_framework_______________________________

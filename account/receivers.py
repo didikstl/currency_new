@@ -18,4 +18,5 @@ def isdigit_user_phone(sender, instance, *args, **kwargs):
     :param kwargs:
     :return:
     """
-    instance.phone = ''.join(char for char in instance.phone if char.isdigit())
+    if instance.phone:
+        instance.phone = ''.join(char for char in instance.phone if char.isdigit())
