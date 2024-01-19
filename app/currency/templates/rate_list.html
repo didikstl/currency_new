@@ -40,7 +40,7 @@
                     <th style="background-color: dimgrey"><h3>Buy: {{ rate.buy }}</h3></th>
                     <th style="background-color: dimgrey"><h3>Sell: {{ rate.sell }}</h3></th>
                     <th style="background-color: skyblue"><h3>Type: {{ rate.get_type_display }}</h3></th>
-                    <th style="background-color: skyblue"><h3>Source: {{ rate.source }}</h3></th>
+                    <th style="background-color: skyblue"><h3>Source: {{ rate.get_source_display }}</h3></th>
                     {% if request.user.is_superuser %}
                         <th>
                             <form action="{% url 'rate-update' rate.id %}" method="get">

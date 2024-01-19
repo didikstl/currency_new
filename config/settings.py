@@ -4,6 +4,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import reverse_lazy
 from celery.schedules import crontab
 
+from datetime import timedelta
+
 # import os
 
 
@@ -40,6 +42,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap4",
     'django_filters',
+    'rest_framework',
+
+    # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
+    'drf_yasg',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -119,6 +125,67 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+        # 'rest_framework_yaml.renderers.YAMLRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # настройка определяет классы аутентификации, которые будут использоваться по умолчанию в проекте
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        # определяет классы прав доступа, которые будут использоваться по умолчанию,
+        # только аутентифицированные пользователи будут иметь доступ к вашим защищенным ресурсам
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    # используется в настройках для указания фреймворку фильтрации, который следует использовать по умолчанию.
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
+    # Используется для ограничения количества запросов, которые пользователь или клиентский IP-адрес
+    # может сделать за определенный период времени.
+    # Это помогает предотвратить злоупотребление или недобросовестное использование API,
+    # а также защищает от DDoS-атак
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer', 'JWT',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=14),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),
+    # 'UPDATE_LAST_LOGIN': True,
+    # 'USER_AGENT_BLACKLIST': [],
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -141,9 +208,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
-
 
 # STORAGES = {
 #     "default": {
@@ -184,7 +248,6 @@ DOMAIN = '0.0.0.0:8001'
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 CELERY_RESULT_BACKEND = 'rpc://'
 
-
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
         'task': 'app.currency.tasks.parse_privatbank',
@@ -196,7 +259,7 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
-#____________________________________________________________________________________
+# ____________________________________________________________________________________
 # from pathlib import Path
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # from django.urls import reverse_lazy
@@ -256,7 +319,7 @@ CELERY_BEAT_SCHEDULE = {
 #             BASE_DIR / 'templates'
 #         ],
 #         'APP_DIRS': True,
-#         'OPTIONS': {
+#         'OPTIONS':
 #             'context_processors': [
 #                 'django.template.context_processors.debug',
 #                 'django.template.context_processors.request',

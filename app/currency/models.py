@@ -45,6 +45,7 @@ class Rate(models.Model):
 
     def __str__(self):
         return f'{self.buy} - {self.sell} - {self.source}'
+        # return f'{self.buy} - {self.sell}'
 
 
 # ContactUs_______________________________________________
@@ -71,6 +72,8 @@ class ContactUs(models.Model):
     class Meta:
         verbose_name = _('Message')
         verbose_name_plural = _('Messages')
+
+
 
 
 # Source______________________________________________________
@@ -120,6 +123,9 @@ class Source(models.Model):
             self.username = uuid.uuid4()
 
         return super().save(*args, **kwargs)
+
+    # def __str__(self):
+    #     return f'{self.source_url} - {self.source_name}'
 
 
 # RequestResponseLog______________________________________________
