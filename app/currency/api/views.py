@@ -13,7 +13,12 @@ from app.currency.models import Rate, Source, ContactUs
 
 from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
 
-from rest_framework import filters
+from rest_framework import filters, status
+
+# для отправки email
+from django.conf import settings
+from django.core.mail import send_mail
+from requests import Response
 
 
 class RateViewSet(ModelViewSet):
@@ -47,6 +52,35 @@ class ContactUsViewSet(ModelViewSet):
     filterset_class = ContactUsFilter
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'email']
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+
+        self._send_email(instance)
+
+        return super().perform_create(serializer)
+
+    def _send_email(self, instance):
+        recipient = settings.DEFAULT_FROM_EMAIL,
+        subject = f"New Contact Us Submission: {instance.subject}"
+        message = f"""
+                Name: {instance.name}
+                Email: {instance.email}
+                Subject: {instance.subject}
+                Message: {instance.message}
+            """
+        send_mail(
+            subject,
+            message,
+            recipient,
+            [recipient],
+            fail_silently=False,
+        )
+
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        self._send_email(self.object)
+        return redirect
 
 # class RateListAPIView(ListAPIView):
 #     """

@@ -37,3 +37,14 @@ class ContactUsSerializer(serializers.ModelSerializer):
             'subject',
             'message',
         )
+
+    def create(self, validated_data):
+        return ContactUs.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.message = validated_data.get('message', instance.message)
+        instance.save()
+        return instance
