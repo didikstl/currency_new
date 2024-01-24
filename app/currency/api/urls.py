@@ -1,6 +1,6 @@
-from django.urls import path
-
+# from django.urls import path
 # from app.currency.api.views import RateListAPIView, RateDetailsAPIView
+
 from app.currency.api.views import RateViewSet, SourceViewSet, ContactUsViewSet
 
 from rest_framework import routers
@@ -12,9 +12,11 @@ router.register(r'contactus', ContactUsViewSet, basename='contactus')
 
 app_name = 'currency_api'
 
-urlpatterns = [
+urlpatterns = router.urls
 
-    # path('rates/', RateListAPIView.as_view(), name='rate-list'),
-    # path('rates/<int:pk>/', RateDetailsAPIView.as_view(), name='rate-details'),
-
-] + router.urls
+# urlpatterns = [
+#
+#     # path('rates/', RateListAPIView.as_view(), name='rate-list'),
+#     # path('rates/<int:pk>/', RateDetailsAPIView.as_view(), name='rate-details'),
+#
+# ] + router.urls
