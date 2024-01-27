@@ -75,12 +75,12 @@ def parse_monobank():
         if type not in available_currency_types:
             continue
 
-        Rate.objects.create(
-            buy=buy,
-            sell=sell,
-            type=type,
-            source=source
-        )
+        # Rate.objects.create(
+        #     buy=buy,
+        #     sell=sell,
+        #     type=type,
+        #     source=source
+        # )
 
         type = available_currency_types[type]
         last_rate = Rate.objects.filter(source=source, type=type).order_by('-created').first()
