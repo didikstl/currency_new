@@ -17,7 +17,7 @@ class RequestResponseTimeMiddleware:
         response = self.get_response(request)
 
         end = time()
-        print(f'After in middleware {end - start}, {request_type}, {request_path}')
+        # print(f'After in middleware {end - start}, {request_type}, {request_path}')
 
         RequestResponseLog.objects.create(
             path=request_path,
