@@ -25,7 +25,9 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views import View
-
+# from django.db import IntegrityError
+# from django.shortcuts import render, redirect
+# from django.urls import reverse_lazy
 
 #
 
@@ -213,12 +215,24 @@ class SourceCreateView(CreateView):
     template_name = 'source_create.html'
 
 
+
+
 class SourceUpdateView(UpdateView):
     model = Source
     form_class = SourceForm
     success_url = reverse_lazy('source-list')
     template_name = 'source_update.html'
 
+    # def form_valid(self, form):
+    #     # Проверяем, существует ли объект с таким code_name
+    #     if Source.objects.filter(code_name=form.cleaned_data['code_name']).exists():
+    #         # Обработка ситуации, когда объект уже существует
+    #         from pyexpat.errors import messages
+    #         messages.error(self.request, 'This code name already exists. Please choose a different one.')
+    #         return render(self.request, self.template_name, {'form': form})
+    #
+    #     # Если объекта с таким code_name нет, продолжаем сохранение
+    #     return super().form_valid(form)
 
 class SourceDeleteView(DeleteView):
     model = Source
