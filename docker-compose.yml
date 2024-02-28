@@ -66,5 +66,27 @@ services:
     ports:
       - "80:80"
 
+  pgadmin:
+    image: pgadmin
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - "5421:5421"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "didikstl@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "qwerty2105"
+
+  flower:
+    image: flower
+    container_name: flower
+    depends_on:
+      - celery
+    ports:
+      - "1234:1234"
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
+
+
 volumes:
   db_data: { }
